@@ -1,4 +1,4 @@
-package com.github.seanhirisave.kafka.demo1;
+package com.seanhirisave.batcave.kafka1;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -23,7 +23,7 @@ public class ProducerDemoKeys {
     properties.setProperty ( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName () );
 
     // create the producer
-    KafkaProducer<String,String> producer = new KafkaProducer<String, String> ( properties );
+    KafkaProducer<String,String> producer = new KafkaProducer<> ( properties );
 
     for ( int i=0; i<10; i++ ){
 
@@ -32,7 +32,7 @@ public class ProducerDemoKeys {
       String key ="id_"+i;
       // create producer record
       ProducerRecord<String,String> record =
-              new ProducerRecord<String, String> ( topic, key, value);
+              new ProducerRecord<> ( topic, key, value);
       logger.info ( "key: "+ key );
       //id_1 partition 0
       //id-2 partition 0
@@ -45,20 +45,18 @@ public class ProducerDemoKeys {
       //id-9 partition 2
 
       //send data - asynchronous
-      producer.send ( record, new Callback ( ) {
-        public void onCompletion ( RecordMetadata recordMetadata, Exception e ) {
-          //executes everytime a record is successfully sent or an exception is thrown
-          if (e == null){
-            // the record was successfully sent
-            logger.info ( "Received new metadata.\n" +
-                    "Topic: "+ recordMetadata.topic () +"\n"+
-                    "Partition: "+ recordMetadata.partition () +"\n"+
-                    "Offset: "+ recordMetadata.offset () +"\n"+
-                    "Timestamp: "+ recordMetadata.timestamp () +"\n"
-            );
-          }else{
-            logger.error ( "Error while producing to topic", e );
-          }
+      producer.send ( record, ( recordMetadata, e ) -> {
+        //executes everytime a record is successfully sent or an exception is thrown
+        if (e == null){
+          // the record was successfully sent
+          logger.info ( "Received new metadata.\n" +
+                  "Topic: "+ recordMetadata.topic () +"\n"+
+                  "Partition: "+ recordMetadata.partition () +"\n"+
+                  "Offset: "+ recordMetadata.offset () +"\n"+
+                  "Timestamp: "+ recordMetadata.timestamp () +"\n"
+          );
+        }else{
+          logger.error ( "Error while producing to topic", e );
         }
       } ).get ();//block the send to make it synchronous :bad practise
     }

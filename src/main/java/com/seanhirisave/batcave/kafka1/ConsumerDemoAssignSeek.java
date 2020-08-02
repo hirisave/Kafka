@@ -1,4 +1,4 @@
-package com.github.seanhirisave.kafka.demo1;
+package com.seanhirisave.batcave.kafka1;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -60,3 +60,6 @@ public class ConsumerDemoAssignSeek {
       logger.info ( "Exiting the Application" );
   }
 }
+
+
+

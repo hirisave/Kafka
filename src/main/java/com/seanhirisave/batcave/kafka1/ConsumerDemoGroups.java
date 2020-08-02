@@ -1,4 +1,4 @@
-package com.github.seanhirisave.kafka.demo1;
+package com.seanhirisave.batcave.kafka1;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.Properties;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 public class ConsumerDemoGroups {
   public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class ConsumerDemoGroups {
       properties.setProperty ( ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName ());
       properties.setProperty ( ConsumerConfig.GROUP_ID_CONFIG,groupId );
       properties.setProperty ( ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest" );
-      //"earliest: read from very beginning","latest: read from the new messges onwards","none: throws error"
+      //"earliest: read from very beginning","latest: read from the new messages onwards","none: throws error"
 
       //create consumer
 
@@ -35,7 +35,7 @@ public class ConsumerDemoGroups {
       //subscribe consumer to our topic(s)
 
 //      consumer.subscribe ( singleton ( topic ) );
-      consumer.subscribe ( asList(topic) );
+      consumer.subscribe ( singletonList (topic) );
       //poll for new data
 
       while (true){

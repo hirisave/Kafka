@@ -1,4 +1,4 @@
-package com.github.seanhirisave.kafka.demo1;
+package com.seanhirisave.batcave.kafka1;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 public class ConsumerDemoWithThread {
   public static void main(String[] args) {
@@ -57,10 +57,10 @@ public class ConsumerDemoWithThread {
           logger.info ( "Application is closing" );
       }
   }
-  public class ConsumerRunnable implements Runnable{
+  public static class ConsumerRunnable implements Runnable{
 
-      private CountDownLatch latch;
-      private KafkaConsumer<String,String> consumer;
+      private final CountDownLatch latch;
+      private final KafkaConsumer<String,String> consumer;
       private final Logger logger = LoggerFactory.getLogger ( ConsumerRunnable.class );
 
       public ConsumerRunnable ( String bootstrapServers, String groupId, String topic, CountDownLatch latch) {
@@ -72,11 +72,11 @@ public class ConsumerDemoWithThread {
           properties.setProperty ( ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName ());
           properties.setProperty ( ConsumerConfig.GROUP_ID_CONFIG,groupId );
           properties.setProperty ( ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest" );
-          //"earliest: read from very beginning","latest: read from the new messges onwards","none: throws error"
+          //"earliest: read from very beginning","latest: read from the new messages onwards","none: throws error"
           //create consumer
           consumer = new KafkaConsumer<> ( properties );
           //subscribe consumer to our topic(s)
-          consumer.subscribe ( asList(topic) );
+          consumer.subscribe ( singletonList (topic) );
       }
 
       @Override
@@ -92,7 +92,7 @@ public class ConsumerDemoWithThread {
                   } );
               }
           }catch (WakeupException e){
-              logger.info ( "Recieved shutdown signal" );
+              logger.info ( "Received shutdown signal" );
           }finally{
               consumer.close ();
               //tell our main code we are done with the consumer

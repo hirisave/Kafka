@@ -1,4 +1,4 @@
-package com.github.seanhirisave.kafka.demo1;
+package com.seanhirisave.batcave.kafka1;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -20,12 +20,12 @@ public class ProducerDemo {
 
     // create the producer
 
-    KafkaProducer<String,String> producer = new KafkaProducer<String, String> ( properties );
+    KafkaProducer<String,String> producer = new KafkaProducer<> ( properties );
 
     // create producer record
 
     ProducerRecord<String,String> record =
-            new ProducerRecord<String, String> ( "first_topic","Hello World" );
+            new ProducerRecord<> ( "first_topic","Hello World" );
 
     //send data - asynchronous
     producer.send ( record );
