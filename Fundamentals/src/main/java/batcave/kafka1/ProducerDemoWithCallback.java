@@ -1,4 +1,4 @@
-package com.seanhirisave.batcave.kafka1;
+package batcave.kafka1;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;

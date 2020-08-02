@@ -1,4 +1,4 @@
-package com.seanhirisave.batcave.kafka1;
+package batcave.kafka1;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -9,11 +9,12 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Properties;
+
 import static java.util.Collections.singletonList;
 
-public class ConsumerDemo {
+public class ConsumerDemoGroups {
   public static void main(String[] args) {
-      final Logger logger = LoggerFactory.getLogger ( ConsumerDemo.class );
+      final Logger logger = LoggerFactory.getLogger ( ConsumerDemoGroups.class );
 
       String bootstrapServers = "127.0.0.1:9092";
       String groupId = "my-fifth-application";
@@ -41,8 +42,8 @@ public class ConsumerDemo {
           ConsumerRecords<String, String> records =
                   consumer.poll ( Duration.ofMillis ( 100 ) );
           records.forEach ( r ->{
-              logger.info ( "Key: "+ r.key () +"Value: "+r.value () );
-              logger.info ( "Partition: "+ r.partition () + "Offset: "+ r.offset ());
+              logger.info ( "Key: "+ r.key () +" Value: "+r.value () );
+              logger.info ( "Partition: "+ r.partition () + " Offset: "+ r.offset ());
           } );
       }
   }
