@@ -28,7 +28,7 @@ import java.util.Properties;
 
 import static java.util.Collections.singletonList;
 
-public class ElasticSearchTwitterConsumer {
+public class ElasticSearchIdempotentConsumer {
 
     public static RestHighLevelClient createClient(){
 
@@ -45,10 +45,10 @@ public class ElasticSearchTwitterConsumer {
         //////////////////////////
 
         // replace with your own credentials
-        String hostname = "elasticsearch.net"; // localhost or bonsai url
+        String hostname = "kafka-course-2615894862.us-east-1.bonsaisearch.net"; // localhost or bonsai url
         // needed only for bonsai
-        String username = "vblah";
-        String password = "blah";
+        String username = "v7oj516zvw";
+        String password = "c83qsm9mhj";
 
         // credentials provider help supply username and password
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
@@ -93,7 +93,7 @@ public class ElasticSearchTwitterConsumer {
 
 
     public static void main(String[] args) throws IOException {
-        Logger logger = LoggerFactory.getLogger( ElasticSearchTwitterConsumer.class.getName());
+        Logger logger = LoggerFactory.getLogger( ElasticSearchIdempotentConsumer.class.getName());
         RestHighLevelClient client = createClient();
 
         KafkaConsumer<String, String> consumer = createConsumer ( "twitter_tweets" );
@@ -101,17 +101,25 @@ public class ElasticSearchTwitterConsumer {
             ConsumerRecords<String, String> records =
                     consumer.poll ( Duration.ofMillis ( 100 ) );
             records.forEach ( r ->{
+                //Idempotence comes from adding id to the request, which can be done in two ways
+                // method one: Kafka generic ID
+//                String id = r.topic () +"_"+ r.partition () +"_"+ r.offset ();
+                //method two: twitter feed specific Id, i.e, id_str
+                String id = "";
+
+
                 //insert data into elastic search
                 String jsonString = r.value ();
                 IndexRequest indexRequest = new IndexRequest (
                         "twitter",
-                        "tweets"
+                        "tweets",
+                        id
                 ).source ( jsonString, XContentType.JSON );
 
                 try {
                     IndexResponse indexResponse = client.index ( indexRequest, RequestOptions.DEFAULT );
-                    String id = indexResponse.getId ();
-                    logger.info ( id );
+                    String elasticRecordId = indexResponse.getId ();
+                    logger.info ( elasticRecordId );
                     Thread.sleep ( 1000 );
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace ( );
