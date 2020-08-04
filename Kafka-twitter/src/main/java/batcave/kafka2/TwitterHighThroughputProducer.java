@@ -25,11 +25,11 @@ import java.util.concurrent.TimeUnit;
 public class TwitterHighThroughputProducer {
 
     Logger logger = LoggerFactory.getLogger ( TwitterHighThroughputProducer.class.getName ());
-    String consumerKey = "key me me";
-    String consumerSecret = "secret secret secret";
-    String token = "token token";
-    String secret = "secret";
-    List<String> terms = Lists.newArrayList("bitcoin", "soccer", "usa", "politics");
+    String consumerKey = "9cfNzvwY5l5EpuWmdzVEgaQex";
+    String consumerSecret = "CMMZLSZWVDrUZ2Bc3QiePf8cFEeWirKyGJyI2c95FtiestGp3N";
+    String token = "1289958932467920896-MMPWiPSX2Ot1YoQjAAQuxn8HLI3XHt";
+    String secret = "Vs34XhjonyzA8FPenUvD3uwGXA155n3EDuYHHpxGApUuQ";
+    List<String> terms = Lists.newArrayList("latvia");
 
     public TwitterHighThroughputProducer (){}
     public static void main(String[] args) {

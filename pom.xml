@@ -23,5 +23,6 @@
     <modules>
         <module>Fundamentals</module>
         <module>Kafka-twitter</module>
+        <module>ElasticSearch</module>
     </modules>
 </project>

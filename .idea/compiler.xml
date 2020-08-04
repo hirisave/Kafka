@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Kafka-twitter" />
         <module name="Fundamentals" />
+        <module name="ElasticSearch" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
